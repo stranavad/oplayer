@@ -15,4 +15,4 @@
   ### VLC module
     For playing songs in the app
 
-  ### If you know any of these things. You can contribute to this project
+  #### If you know any of these things. You can contribute to this project

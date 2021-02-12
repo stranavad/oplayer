@@ -41,89 +41,89 @@ class MyWindow(QMainWindow):
 
     # UI PARTS
     def create_play_part(self):
-        self.labelPlayer = QtWidgets.QLabel(self)
-        self.labelPlayer.setText("Player")
-        self.labelPlayer.move(100, 50)
+        self.label_player = QtWidgets.QLabel(self)
+        self.label_player.setText("Player")
+        self.label_player.move(100, 50)
 
-        self.songToPlay = QtWidgets.QComboBox(self)
-        self.songToPlay.move(100, 100)
-        self.songToPlay.resize(280, 40)
-        self.songToPlay.addItem("First choose playlist")
+        self.song_to_play = QtWidgets.QComboBox(self)
+        self.song_to_play.move(100, 100)
+        self.song_to_play.resize(280, 40)
+        self.song_to_play.addItem("First choose playlist")
 
-        self.comboPlaylist = QtWidgets.QComboBox(self)
-        self.comboPlaylist.move(100, 150)
-        self.comboPlaylist.resize(280, 40)
-        self.comboPlaylist.currentIndexChanged.connect(self.change_songs)
+        self.combo_playlist = QtWidgets.QComboBox(self)
+        self.combo_playlist.move(100, 150)
+        self.combo_playlist.resize(280, 40)
+        self.combo_playlist.currentIndexChanged.connect(self.change_songs)
 
-        self.bPlay = QtWidgets.QPushButton(self)
-        self.bPlay.setText("Play")
-        self.bPlay.move(100, 200)
-        self.bPlay.resize(280, 40)
-        self.bPlay.clicked.connect(self.play)
+        self.button_play = QtWidgets.QPushButton(self)
+        self.button_play.setText("Play")
+        self.button_play.move(100, 200)
+        self.button_play.resize(280, 40)
+        self.button_play.clicked.connect(self.play)
 
-        self.bResume = QtWidgets.QPushButton(self)
-        self.bResume.setText("Resume")
-        self.bResume.move(100, 250)
-        self.bResume.resize(280, 40)
-        self.bResume.clicked.connect(self.resume)
+        self.button_resume = QtWidgets.QPushButton(self)
+        self.button_resume.setText("Resume")
+        self.button_resume.move(100, 250)
+        self.button_resume.resize(280, 40)
+        self.button_resume.clicked.connect(self.resume)
 
-        self.bStop = QtWidgets.QPushButton(self)
-        self.bStop.setText("Stop")
-        self.bStop.move(100, 300)
-        self.bStop.resize(280, 40)
-        self.bStop.clicked.connect(self.stop)
+        self.button_stop = QtWidgets.QPushButton(self)
+        self.button_stop.setText("Stop")
+        self.button_stop.move(100, 300)
+        self.button_stop.resize(280, 40)
+        self.button_stop.clicked.connect(self.stop)
 
     def create_download_part(self):
-        self.labelYoutube = QtWidgets.QLabel(self)
-        self.labelYoutube.setText("Youtube downloader")
-        self.labelYoutube.move(600, 50)
+        self.label_youtube = QtWidgets.QLabel(self)
+        self.label_youtube.setText("Youtube downloader")
+        self.label_youtube.move(600, 50)
 
-        self.textboxYoutube = QtWidgets.QLineEdit(self)
-        self.textboxYoutube.move(600, 100)
-        self.textboxYoutube.resize(280, 40)
+        self.textbox_youtube = QtWidgets.QLineEdit(self)
+        self.textbox_youtube.move(600, 100)
+        self.textbox_youtube.resize(280, 40)
 
-        self.comboPlaylistDownload = QtWidgets.QComboBox(self)
-        self.comboPlaylistDownload.move(600, 150)
-        self.comboPlaylistDownload.resize(280, 40)
+        self.combo_playlist_download = QtWidgets.QComboBox(self)
+        self.combo_playlist_download.move(600, 150)
+        self.combo_playlist_download.resize(280, 40)
 
-        self.textboxYoutubeName = QtWidgets.QLineEdit(self)
-        self.textboxYoutubeName.move(600, 200)
-        self.textboxYoutubeName.resize(280, 40)
+        self.textbox_youtube_name = QtWidgets.QLineEdit(self)
+        self.textbox_youtube_name.move(600, 200)
+        self.textbox_youtube_name.resize(280, 40)
 
-        self.bDownload = QtWidgets.QPushButton(self)
-        self.bDownload.setText("Download")
-        self.bDownload.move(600, 250)
-        self.bDownload.clicked.connect(self.download)
+        self.button_download = QtWidgets.QPushButton(self)
+        self.button_download.setText("Download")
+        self.button_download.move(600, 250)
+        self.button_download.clicked.connect(self.download)
 
     def create_playlist_part(self):
-        self.labelCreatePlaylist = QtWidgets.QLabel(self)
-        self.labelCreatePlaylist.setText("Create playlist")
-        self.labelCreatePlaylist.move(1100, 50)
+        self.label_create_playlist = QtWidgets.QLabel(self)
+        self.label_create_playlist.setText("Create playlist")
+        self.label_create_playlist.move(1100, 50)
 
-        self.textboxCreatePlaylist = QtWidgets.QLineEdit(self)
-        self.textboxCreatePlaylist.move(1100, 100)
-        self.textboxCreatePlaylist.resize(280, 40)
+        self.textbox_create_playlist = QtWidgets.QLineEdit(self)
+        self.textbox_create_playlist.move(1100, 100)
+        self.textbox_create_playlist.resize(280, 40)
 
-        self.bCreatePlaylist = QtWidgets.QPushButton(self)
-        self.bCreatePlaylist.setText("Create Playlist")
-        self.bCreatePlaylist.move(1100, 150)
-        self.bCreatePlaylist.resize(280, 40)
-        self.bCreatePlaylist.clicked.connect(self.create_playlist)
+        self.button_create_playlist = QtWidgets.QPushButton(self)
+        self.button_create_playlist.setText("Create Playlist")
+        self.button_create_playlist.move(1100, 150)
+        self.button_create_playlist.resize(280, 40)
+        self.button_create_playlist.clicked.connect(self.create_playlist)
 
     def create_app_controls(self):
-        self.volumeSlider = QtWidgets.QSlider(Qt.Horizontal, self)
-        self.volumeSlider.move(600, 350)
-        self.volumeSlider.resize(280, 40)
-        self.volumeSlider.setValue(100)
-        self.volumeSlider.valueChanged[int].connect(self.volume_changed)
+        self.volume_slider = QtWidgets.QSlider(Qt.Horizontal, self)
+        self.volume_slider.move(600, 350)
+        self.volume_slider.resize(280, 40)
+        self.volume_slider.setValue(100)
+        self.volume_slider.valueChanged[int].connect(self.volume_changed)
 
     # Music controls
     def play(self):
         self.player.set_pause(1)
-        songName, songPath = self.songToPlay.currentText(), self.comboPlaylist.currentText()
+        songName, songPath = self.song_to_play.currentText(), self.combo_playlist.currentText()
         self.player = vlc.MediaPlayer(songPath + "/" + songName + ".mp3")
         self.player.play()
-        self.labelPlayer.setText("Playing: " + songName)
+        self.label_player.setText("Playing: " + songName)
         self.update()
 
     def volume_changed(self, value):
@@ -138,17 +138,18 @@ class MyWindow(QMainWindow):
     # Youtube download
     def download(self):
         ydl_opts = ydl_opts_mp3
-        ydl_opts["outtmpl"] = self.comboPlaylistDownload.currentText() + "/" + self.textboxYoutubeName.text().strip() + ".mp3"
+        ydl_opts["outtmpl"] = self.combo_playlist_download.currentText() + "/" + self.textbox_youtube_name.text().strip() + ".mp3"
         # ydl_opts = {'outtmpl': 'file_path/file_name'}
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([self.textboxYoutube.text()])
+            ydl.download([self.textbox_youtube.text()])
 
     # Creating playlists-folders
     def create_playlist(self):
-        path = self.textboxCreatePlaylist.text()
+        path = self.textbox_create_playlist.text()
+        print(path)
         try:
             os.mkdir(path)
-            self.list_folders()
+            # self.list_folders()
         except OSError:
             print ("Creation of the directory %s failed" % path)
         else:
@@ -158,24 +159,25 @@ class MyWindow(QMainWindow):
 
     # Updating UI elements
     def update(self):  # Updating the size of elements
-        self.labelPlayer.adjustSize()
-        self.labelYoutube.adjustSize()
+        self.label_player.adjustSize()
+        self.label_youtube.adjustSize()
 
     def list_folders(self):  # Changing folders in dropdowns
-        self.comboPlaylistDownload.clear()
-        self.comboPlaylist.clear()
+        self.combo_playlist_download.clear()
+        self.combo_playlist.clear()
         for x in os.listdir('.'):
             if os.path.isdir(x):
-                if x == ".empty":
+                if x == ".empty" or x == ".git":
                     continue
-                self.comboPlaylist.addItem(x)
-                self.comboPlaylistDownload.addItem(x)
+                self.combo_playlist.addItem(x)
+                self.combo_playlist_download.addItem(x)
 
     def change_songs(self):  # Changing songs in dropdown based on the playlist choosed
-        self.songToPlay.clear()
-        for x in os.listdir(self.comboPlaylist.currentText()):
-            if os.path.isfile(self.comboPlaylist.currentText() + "/" + x):
-                self.songToPlay.addItem(x.replace(".mp3", ""))
+        self.song_to_play.clear()
+        if self.combo_playlist.currentText() != "":
+            for x in os.listdir(self.combo_playlist.currentText()):
+                if os.path.isfile(self.combo_playlist.currentText() + "/" + x):
+                    self.song_to_play.addItem(x.replace(".mp3", ""))
 
 
 # The init function
