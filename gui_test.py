@@ -13,7 +13,7 @@ ydl_opts_mp3 = {
         "key": "FFmpegExtractAudio",
         "preferredcodec": "mp3",
         "preferredquality": "320",
-    }], 
+    }],
 }
 
 class MyWindow(QMainWindow):
@@ -24,9 +24,23 @@ class MyWindow(QMainWindow):
         self.initUI()
         self.player = vlc.MediaPlayer()
         self.folders = self.list_folders()
-    
+
+    # Main UI
     def initUI(self):
         # PLAYER SIDE
+        self.create_play_part()
+
+        # YOUTUBE DOWNLOAD SIDE
+        self.create_download_part()
+
+        # CREATE PLAYLIST SIDE
+        self.create_playlist_part()
+
+        # VOLUME SLIDER
+        self.create_app_controls()
+
+    # UI PARTS
+    def create_play_part(self):
         self.labelPlayer = QtWidgets.QLabel(self)
         self.labelPlayer.setText("Player")
         self.labelPlayer.move(100, 50)
@@ -59,7 +73,7 @@ class MyWindow(QMainWindow):
         self.bStop.resize(280, 40)
         self.bStop.clicked.connect(self.stop)
 
-        # YOUTUBE DOWNLOAD SIDE
+    def create_download_part(self):
         self.labelYoutube = QtWidgets.QLabel(self)
         self.labelYoutube.setText("Youtube downloader")
         self.labelYoutube.move(600, 50)
@@ -81,7 +95,7 @@ class MyWindow(QMainWindow):
         self.bDownload.move(600, 250)
         self.bDownload.clicked.connect(self.download)
 
-        # CREATE PLAYLIST SIDE
+    def create_playlist_part(self):
         self.labelCreatePlaylist = QtWidgets.QLabel(self)
         self.labelCreatePlaylist.setText("Create playlist")
         self.labelCreatePlaylist.move(1100, 50)
@@ -96,36 +110,40 @@ class MyWindow(QMainWindow):
         self.bCreatePlaylist.resize(280, 40)
         self.bCreatePlaylist.clicked.connect(self.create_playlist)
 
-        # VOLUME SLIDER
+    def create_app_controls(self):
         self.volumeSlider = QtWidgets.QSlider(Qt.Horizontal, self)
         self.volumeSlider.move(600, 350)
         self.volumeSlider.resize(280, 40)
         self.volumeSlider.setValue(100)
         self.volumeSlider.valueChanged[int].connect(self.volume_changed)
 
+    # Music controls
     def play(self):
+        self.player.set_pause(1)
         songName, songPath = self.songToPlay.currentText(), self.comboPlaylist.currentText()
         self.player = vlc.MediaPlayer(songPath + "/" + songName + ".mp3")
         self.player.play()
-        self.labelPlayer.setText("Playing: " + textboxValue)
+        self.labelPlayer.setText("Playing: " + songName)
         self.update()
-    
-    def list_folders(self):
-        self.comboPlaylistDownload.clear()
-        self.comboPlaylist.clear()
-        for x in os.listdir('.'):
-            if os.path.isdir(x): 
-                if x == ".empty":
-                    continue
-                self.comboPlaylist.addItem(x)
-                self.comboPlaylistDownload.addItem(x)
 
-    def change_songs(self):
-        self.songToPlay.clear()
-        for x in os.listdir(self.comboPlaylist.currentText()):
-            if os.path.isfile(self.comboPlaylist.currentText() + "/" + x):
-                self.songToPlay.addItem(x.replace(".mp3", ""))
+    def volume_changed(self, value):
+        self.player.audio_set_volume(value)
 
+    def stop(self):
+        self.player.set_pause(1)
+
+    def resume(self):
+        self.player.set_pause(0)
+
+    # Youtube download
+    def download(self):
+        ydl_opts = ydl_opts_mp3
+        ydl_opts["outtmpl"] = self.comboPlaylistDownload.currentText() + "/" + self.textboxYoutubeName.text().strip() + ".mp3"
+        # ydl_opts = {'outtmpl': 'file_path/file_name'}
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([self.textboxYoutube.text()])
+
+    # Creating playlists-folders
     def create_playlist(self):
         path = self.textboxCreatePlaylist.text()
         try:
@@ -135,33 +153,32 @@ class MyWindow(QMainWindow):
             print ("Creation of the directory %s failed" % path)
         else:
             print ("Successfully created the directory %s " % path)
-        
-        self.list_folders()
-    
-    def download(self):
-        ydl_opts = ydl_opts_mp3
-        ydl_opts["outtmpl"] = self.comboPlaylistDownload.currentText() + "/" + self.textboxYoutubeName.text().strip() + ".mp3"
-        # ydl_opts = {'outtmpl': 'file_path/file_name'}
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([self.textboxYoutube.text()])
-    
-    def volume_changed(self, value):
-        self.player.audio_set_volume(value)
-    
-    def stop(self):
-        self.player.set_pause(1)
 
-    def resume(self):
-        self.player.set_pause(0)
-    
-    def update(self):  # Updating the size of elemenrs
+        self.list_folders()
+
+    # Updating UI elements
+    def update(self):  # Updating the size of elements
         self.labelPlayer.adjustSize()
         self.labelYoutube.adjustSize()
 
-def clicked():
-    print("Clicked")
+    def list_folders(self):  # Changing folders in dropdowns
+        self.comboPlaylistDownload.clear()
+        self.comboPlaylist.clear()
+        for x in os.listdir('.'):
+            if os.path.isdir(x):
+                if x == ".empty":
+                    continue
+                self.comboPlaylist.addItem(x)
+                self.comboPlaylistDownload.addItem(x)
+
+    def change_songs(self):  # Changing songs in dropdown based on the playlist choosed
+        self.songToPlay.clear()
+        for x in os.listdir(self.comboPlaylist.currentText()):
+            if os.path.isfile(self.comboPlaylist.currentText() + "/" + x):
+                self.songToPlay.addItem(x.replace(".mp3", ""))
 
 
+# The init function
 def window():
     app = QApplication([]) # ssys.argv
     win = MyWindow()
